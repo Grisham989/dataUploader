@@ -50,7 +50,7 @@ public class Database {
 					tx = session.beginTransaction();
 				}
 			}
-			tx.rollback();
+			tx.commit();
 		} catch (Exception e) {
 			if (tx != null)
 				tx.rollback();
