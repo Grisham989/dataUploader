@@ -12,6 +12,7 @@ import org.xml.sax.SAXException;
 public final class XmlParserBuilder {
 	Author author;
 	static Logger logger = Logger.getLogger("XmlParserBuilder");
+
 	private static File readFile(String fileName) {
 		StringBuilder sb = new StringBuilder("C:\\xml\\");
 		sb.append(fileName).append(".xml");
@@ -19,28 +20,25 @@ public final class XmlParserBuilder {
 		logger.info("Wczytano plik");
 		return file;
 	}
-	
-	private static Document fileToDocument(File file)
-	{
-		try{
+
+	private static Document fileToDocument(File file) {
+		try {
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder db = dbFactory.newDocumentBuilder();
 			Document document = db.parse(file);
 			logger.info("Przekonwertowano plik na dokument");
 			return document;
-		}catch(Exception e){
+		} catch (Exception e) {
 			return null;
 		}
 	}
-	
-	static XmlParser newXmlParser(String fileName)
-	{
+
+	static XmlParser newXmlParser(String fileName) {
 		File file = readFile(fileName);
 		Document document = fileToDocument(file);
 		XmlParser parser = new XmlParser(document);
 		logger.info("Utworzono parser");
-		return parser;	
+		return parser;
 	}
-	
 
 }

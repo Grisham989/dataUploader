@@ -24,15 +24,35 @@ public class SAXParser extends DefaultHandler {
 
 		if (qName.equalsIgnoreCase("author")) {
 			authors.add(new Author());
+			if (authors.size() % 10000 == 0) {
+				StringBuilder sb = new StringBuilder("authors: ");
+				sb.append(authors.size());
+				logger.info(sb.toString());
+			}
 			BVars.bAuthor = true;
 		} else if (qName.equalsIgnoreCase("book")) {
 			books.add(new Book());
+			if (books.size() % 10000 == 0) {
+				StringBuilder sb = new StringBuilder("books: ");
+				sb.append(books.size());
+				logger.info(sb.toString());
+			}
 			BVars.bBook = true;
 		} else if (qName.equalsIgnoreCase("customer")) {
 			customers.add(new Customer());
+			if (customers.size() % 10000 == 0) {
+				StringBuilder sb = new StringBuilder("customers: ");
+				sb.append(customers.size() / 10000);
+				logger.info(sb.toString());
+			}
 			BVars.bCustomer = true;
 		} else if (qName.equalsIgnoreCase("order")) {
 			orders.add(new Order());
+			if (orders.size() % 10000 == 0) {
+				StringBuilder sb = new StringBuilder("orders: ");
+				sb.append(orders.size() / 10000);
+				logger.info(sb.toString());
+			}
 			BVars.bOrder = true;
 		}
 

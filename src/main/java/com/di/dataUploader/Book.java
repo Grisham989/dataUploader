@@ -48,7 +48,7 @@ public class Book {
 		this.price = price;
 	}
 
-	public String getAutorCode() {
+	public String getAuthorCode() {
 		return authorCode;
 	}
 

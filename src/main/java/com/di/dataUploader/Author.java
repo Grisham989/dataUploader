@@ -1,17 +1,11 @@
 package com.di.dataUploader;
 
-import java.io.Serializable;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-
-public class Author implements Serializable{
+public class Author {
 	private String firstName;
 	private String lastName;
 	private String pseudonym;
 	private String code;
-	
+
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
@@ -43,5 +37,5 @@ public class Author implements Serializable{
 	public String getCode() {
 		return code;
 	}
-	
+
 }

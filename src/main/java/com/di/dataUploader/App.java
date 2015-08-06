@@ -32,19 +32,18 @@ public class App {
 		System.out.println("sax");
 		String parserType = sc.nextLine();
 
-		
 		if (parserType.equalsIgnoreCase("sax")) {
 			long timeStart = System.currentTimeMillis();
 			saxParse(inputFile);
 			StringBuilder sb = new StringBuilder("Parsing time: ");
-			sb.append((float)(System.currentTimeMillis()-timeStart)/1000).append(" seconds");
+			sb.append((float) (System.currentTimeMillis() - timeStart) / 1000).append(" seconds");
 			logger.info(sb.toString());
 		} else if (parserType.equalsIgnoreCase("dom")) {
-			XmlParser parser = XmlParserBuilder.newXmlParser(inputFile);
+			// XmlParser parser = XmlParserBuilder.newXmlParser(inputFile);
 		}
+		
+		uploadData();
 
-		// Database baza = new Database();
-		// baza.addAuthor(nowy);
 	}
 
 	static void saxParse(String file) {
@@ -65,5 +64,22 @@ public class App {
 		books = saxHandler.getBooks();
 		orders = saxHandler.getOrders();
 		customers = saxHandler.getCustomers();
+	}
+	
+	static void uploadData()
+	{
+		logger.info("Uploading to db");
+		long timeStart = System.currentTimeMillis();
+		Database db = new Database();
+		db.openCloseSession();
+		db.addList(authors.toArray(), "author");
+		db.addList(books.toArray(), "book");
+		db.addList(customers.toArray(), "customer");
+		db.addList(orders.toArray(), "orders");
+		db.openCloseSession();
+		db.factory.close();
+		StringBuilder sb = new StringBuilder("Uploading time: ");
+		sb.append((float) (System.currentTimeMillis() - timeStart) / 1000).append(" seconds");
+		logger.info(sb.toString());
 	}
 }

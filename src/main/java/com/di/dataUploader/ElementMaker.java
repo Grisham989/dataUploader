@@ -1,20 +1,25 @@
 package com.di.dataUploader;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.sql.Date;
+import java.util.GregorianCalendar;
+import java.util.Locale;
 
 public final class ElementMaker {
 	static void authorMaker(String str, ArrayList<Author> authors) {
 		if (BVars.bFirstName) {
-			authors.get(authors.size() - 1).setFirstName(str);
+			((Author) authors.get(authors.size() - 1)).setFirstName(str);
 			BVars.bFirstName = false;
 		} else if (BVars.bLastName) {
-			authors.get(authors.size() - 1).setLastName(str);
+			((Author) authors.get(authors.size() - 1)).setLastName(str);
 			BVars.bLastName = false;
 		} else if (BVars.bPseudonym) {
-			authors.get(authors.size() - 1).setPseudonym(str);
+			((Author) authors.get(authors.size() - 1)).setPseudonym(str);
 			BVars.bPseudonym = false;
 		} else if (BVars.bCode) {
-			authors.get(authors.size() - 1).setCode(str);
+			((Author) authors.get(authors.size() - 1)).setCode(str);
 			BVars.bCode = false;
 		}
 	}
@@ -77,7 +82,10 @@ public final class ElementMaker {
 			orders.get(orders.size() - 1).setBookCode(str);
 			BVars.bBookcode = false;
 		} else if (BVars.bOrderDate) {
-			orders.get(orders.size() - 1).setOrderDate(str);
+			GregorianCalendar gc = new GregorianCalendar();
+			gc.set(Integer.parseInt(str.substring(0, 4)), Integer.parseInt(str.substring(5, 7)), Integer.parseInt(str.substring(8,10)), Integer.parseInt(str.substring(11,13)), Integer.parseInt(str.substring(14,16)), Integer.parseInt(str.substring(17,19)));
+			Date date = new Date(gc.getTimeInMillis());
+			orders.get(orders.size() - 1).setOrderDate(date);
 			BVars.bOrderDate = false;
 		}
 	}
