@@ -30,7 +30,7 @@ public class Database {
 		Transaction tx = null;
 		int controllNumber = 0;
 		tx = session.beginTransaction();
-		try {	
+		try {
 			for (Object object : list) {
 				controllNumber++;
 				if (tableName.equalsIgnoreCase("author")) {
@@ -40,10 +40,9 @@ public class Database {
 				} else if (tableName.equalsIgnoreCase("customer")) {
 					session.save((Customer) object);
 				} else if (tableName.equalsIgnoreCase("orders")) {
-					session.save((Order)object);
+					session.save((Order) object);
 				}
-				if(controllNumber%10000 ==0)
-				{
+				if (controllNumber % 10000 == 0) {
 					StringBuilder sb = new StringBuilder(tableName);
 					sb.append(" krok: ").append(controllNumber).append(" z ").append(list.length);
 					logger.info(sb.toString());

@@ -27,11 +27,14 @@ public class App {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Wprowadz nazwe pliku (bez rozszerzenia): ");
 		String inputFile = sc.nextLine();
-		System.out.println("Wybierz typ parsera: ");
-		System.out.println("dom");
-		System.out.println("sax");
-		String parserType = sc.nextLine();
-
+		
+		
+		//System.out.println("Wybierz typ parsera: ");
+		//System.out.println("dom");
+		//System.out.println("sax");
+		//String parserType = sc.nextLine();
+		String parserType= "sax";
+		
 		if (parserType.equalsIgnoreCase("sax")) {
 			long timeStart = System.currentTimeMillis();
 			saxParse(inputFile);
@@ -41,7 +44,7 @@ public class App {
 		} else if (parserType.equalsIgnoreCase("dom")) {
 			// XmlParser parser = XmlParserBuilder.newXmlParser(inputFile);
 		}
-		
+
 		uploadData();
 
 	}
@@ -65,11 +68,11 @@ public class App {
 		orders = saxHandler.getOrders();
 		customers = saxHandler.getCustomers();
 	}
-	
-	static void uploadData()
-	{
+
+	static void uploadData() {
 		logger.info("Uploading to db");
 		long timeStart = System.currentTimeMillis();
+		
 		Database db = new Database();
 		db.openCloseSession();
 		db.addList(authors.toArray(), "author");
@@ -78,6 +81,7 @@ public class App {
 		db.addList(orders.toArray(), "orders");
 		db.openCloseSession();
 		db.factory.close();
+		
 		StringBuilder sb = new StringBuilder("Uploading time: ");
 		sb.append((float) (System.currentTimeMillis() - timeStart) / 1000).append(" seconds");
 		logger.info(sb.toString());

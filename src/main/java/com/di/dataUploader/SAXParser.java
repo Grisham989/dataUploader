@@ -24,35 +24,19 @@ public class SAXParser extends DefaultHandler {
 
 		if (qName.equalsIgnoreCase("author")) {
 			authors.add(new Author());
-			if (authors.size() % 10000 == 0) {
-				StringBuilder sb = new StringBuilder("authors: ");
-				sb.append(authors.size());
-				logger.info(sb.toString());
-			}
+			statusMessage(authors.size(), "authors");
 			BVars.bAuthor = true;
 		} else if (qName.equalsIgnoreCase("book")) {
 			books.add(new Book());
-			if (books.size() % 10000 == 0) {
-				StringBuilder sb = new StringBuilder("books: ");
-				sb.append(books.size());
-				logger.info(sb.toString());
-			}
+			statusMessage(books.size(), "books");
 			BVars.bBook = true;
 		} else if (qName.equalsIgnoreCase("customer")) {
 			customers.add(new Customer());
-			if (customers.size() % 10000 == 0) {
-				StringBuilder sb = new StringBuilder("customers: ");
-				sb.append(customers.size() / 10000);
-				logger.info(sb.toString());
-			}
+			statusMessage(customers.size(), "customers");
 			BVars.bCustomer = true;
 		} else if (qName.equalsIgnoreCase("order")) {
 			orders.add(new Order());
-			if (orders.size() % 10000 == 0) {
-				StringBuilder sb = new StringBuilder("orders: ");
-				sb.append(orders.size() / 10000);
-				logger.info(sb.toString());
-			}
+			statusMessage(orders.size(), "orders");
 			BVars.bOrder = true;
 		}
 
@@ -119,6 +103,14 @@ public class SAXParser extends DefaultHandler {
 
 	public ArrayList<Order> getOrders() {
 		return orders;
+	}
+
+	private void statusMessage(int number, String name) {
+		if (number % 10000 == 0) {
+			StringBuilder sb = new StringBuilder(name);
+			sb.append(": ").append(authors.size());
+			logger.info(sb.toString());
+		}
 	}
 
 }
