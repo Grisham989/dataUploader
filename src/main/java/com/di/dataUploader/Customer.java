@@ -52,10 +52,4 @@ public class Customer {
 		this.firstName = firstName;
 	}
 	
-	public String printCustomer()
-	{
-		StringBuilder sb = new StringBuilder();
-		sb.append("code: ").append(code).append(" firstName: ").append(firstName).append(" lastName: ").append(lastName);
-		return sb.toString();
-	}
 }

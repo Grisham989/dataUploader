@@ -7,7 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 public class Author implements Serializable{
-	public String firstName;
+	private String firstName;
 	private String lastName;
 	private String pseudonym;
 	private String code;
@@ -44,10 +44,4 @@ public class Author implements Serializable{
 		return code;
 	}
 	
-	public String printAuthor()
-	{
-		StringBuilder sb = new StringBuilder();
-		sb.append("code: ").append(code).append(" firstName: ").append(firstName).append(" lastName: ").append(lastName);
-		return sb.toString();
-	}
 }

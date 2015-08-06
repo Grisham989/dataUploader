@@ -30,10 +30,4 @@ public class Order {
 	}
 	private String orderDate;
 	
-	public String printOrder()
-	{
-		StringBuilder sb = new StringBuilder();
-		sb.append("data: ").append(orderDate);
-		return sb.toString();
-	}
 }

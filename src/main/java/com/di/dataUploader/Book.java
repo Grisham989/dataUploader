@@ -56,10 +56,4 @@ public class Book {
 		this.authorCode = autorCode;
 	}
 
-	public String printBook()
-	{
-		StringBuilder sb = new StringBuilder();
-		sb.append("code: ").append(code).append(" ISBN: ").append(ISBN).append(" price: ").append(price);
-		return sb.toString();
-	}
 }
