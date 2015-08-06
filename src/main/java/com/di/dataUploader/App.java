@@ -28,7 +28,6 @@ public class App {
 		System.out.println("Wprowadz nazwe pliku (bez rozszerzenia): ");
 		String inputFile = sc.nextLine();
 		
-		
 		//System.out.println("Wybierz typ parsera: ");
 		//System.out.println("dom");
 		//System.out.println("sax");
@@ -37,7 +36,7 @@ public class App {
 		
 		if (parserType.equalsIgnoreCase("sax")) {
 			long timeStart = System.currentTimeMillis();
-			saxParse(inputFile);
+			saxParse(inputFile, true);
 			StringBuilder sb = new StringBuilder("Parsing time: ");
 			sb.append((float) (System.currentTimeMillis() - timeStart) / 1000).append(" seconds");
 			logger.info(sb.toString());
@@ -45,11 +44,11 @@ public class App {
 			// XmlParser parser = XmlParserBuilder.newXmlParser(inputFile);
 		}
 
-		uploadData();
+		//uploadData();
 
 	}
 
-	static void saxParse(String file) {
+	static void saxParse(String file,  boolean methodDB) {
 		com.di.dataUploader.SAXParser saxHandler = new com.di.dataUploader.SAXParser();
 		try {
 			StringBuilder sb = new StringBuilder("C:/xml/");
@@ -59,14 +58,25 @@ public class App {
 			SAXParserFactory factory = SAXParserFactory.newInstance();
 			SAXParser saxParser = factory.newSAXParser();
 			saxHandler = new com.di.dataUploader.SAXParser();
+			saxHandler.methodDB = methodDB;
+			if(methodDB){
+				saxHandler.db.openCloseSession();
+				saxHandler.db.cleanTables();
+				saxHandler.db.makeTransaction();
+			}
 			saxParser.parse(inputFile, saxHandler);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		if(!methodDB){
 		authors = saxHandler.getAuthors();
 		books = saxHandler.getBooks();
 		orders = saxHandler.getOrders();
 		customers = saxHandler.getCustomers();
+		}else{
+			saxHandler.db.openCloseSession();
+			saxHandler.db.factory.close();
+		}
 	}
 
 	static void uploadData() {

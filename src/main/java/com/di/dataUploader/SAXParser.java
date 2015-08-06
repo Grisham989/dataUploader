@@ -16,27 +16,49 @@ public class SAXParser extends DefaultHandler {
 	ArrayList<Customer> customers = new ArrayList<Customer>();
 	ArrayList<Book> books = new ArrayList<Book>();
 	ArrayList<Order> orders = new ArrayList<Order>();
-
+	Author author;
+	Order order;
+	Customer customer;
+	Book book;
+	int counter = 0;
 	static Logger logger = Logger.getLogger("SAXAutgorParser");
+	static Database db = new Database();
+	static boolean methodDB = false;
 
 	@Override
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
-
 		if (qName.equalsIgnoreCase("author")) {
-			authors.add(new Author());
-			statusMessage(authors.size(), "authors");
+			if (methodDB) {
+				author = new Author();
+			} else {
+				authors.add(new Author());
+				statusMessage(authors.size(), "authors");
+			}
 			BVars.bAuthor = true;
 		} else if (qName.equalsIgnoreCase("book")) {
-			books.add(new Book());
-			statusMessage(books.size(), "books");
+			if (methodDB) {
+				book = new Book();
+			} else {
+				books.add(new Book());
+				statusMessage(books.size(), "books");
+			}
 			BVars.bBook = true;
 		} else if (qName.equalsIgnoreCase("customer")) {
-			customers.add(new Customer());
-			statusMessage(customers.size(), "customers");
+			if (methodDB) {
+				customer = new Customer();
+			} else {
+				customers.add(new Customer());
+				statusMessage(customers.size(), "customers");
+			}
 			BVars.bCustomer = true;
 		} else if (qName.equalsIgnoreCase("order")) {
-			orders.add(new Order());
-			statusMessage(orders.size(), "orders");
+			if (methodDB) {
+				order = new Order();
+			} else {
+				orders.add(new Order());
+				statusMessage(orders.size(), "orders");
+			}
+
 			BVars.bOrder = true;
 		}
 
@@ -53,38 +75,73 @@ public class SAXParser extends DefaultHandler {
 
 	@Override
 	public void endElement(String uri, String localName, String qName) throws SAXException {
+		counter++;
 		if (qName.equalsIgnoreCase("author")) {
+			if (methodDB) {
+				db.addObject((Object) author, "author");
+			}
 			BVars.bAuthor = false;
 		} else if (qName.equalsIgnoreCase("book")) {
+			if (methodDB) {
+				db.addObject((Object) book, "book");
+			}
 			BVars.bBook = false;
 		} else if (qName.equalsIgnoreCase("customer")) {
+			if (methodDB) {
+				db.addObject((Object) customer, "customer");
+			}
 			BVars.bCustomer = false;
 		} else if (qName.equalsIgnoreCase("order")) {
+			if (methodDB) {
+				db.addObject((Object) order, "orders");
+			}
 			BVars.bOrder = false;
+		}
+		if (methodDB) {
+			if (counter % 1000 == 0) {
+				if (counter > 0) {
+					//db.commitTransaction();
+				}
+			}
 		}
 	}
 
 	@Override
 	public void characters(char ch[], int start, int length) throws SAXException {
-
-		if (BVars.bAuthor) {
-			ElementMaker.authorMaker(new String(ch, start, length), authors);
-			return;
-		}
-
-		if (BVars.bBook) {
-			ElementMaker.bookMaker(new String(ch, start, length), books);
-			return;
-		}
-
-		if (BVars.bCustomer) {
-			ElementMaker.customerMaker(new String(ch, start, length), customers);
-			return;
-		}
-
-		if (BVars.bOrder) {
-			ElementMaker.orderMaker(new String(ch, start, length), orders);
-			return;
+		if (methodDB) {
+			if (BVars.bAuthor) {
+				ElementMakerSingle.authorMaker(new String(ch, start, length), author);
+				return;
+			}
+			if (BVars.bBook) {
+				ElementMakerSingle.bookMaker(new String(ch, start, length), book);
+				return;
+			}
+			if (BVars.bCustomer) {
+				ElementMakerSingle.customerMaker(new String(ch, start, length), customer);
+				return;
+			}
+			if (BVars.bOrder) {
+				ElementMakerSingle.orderMaker(new String(ch, start, length), order);
+				return;
+			}
+		} else {
+			if (BVars.bAuthor) {
+				ElementMaker.authorMaker(new String(ch, start, length), authors);
+				return;
+			}
+			if (BVars.bBook) {
+				ElementMaker.bookMaker(new String(ch, start, length), books);
+				return;
+			}
+			if (BVars.bCustomer) {
+				ElementMaker.customerMaker(new String(ch, start, length), customers);
+				return;
+			}
+			if (BVars.bOrder) {
+				ElementMaker.orderMaker(new String(ch, start, length), orders);
+				return;
+			}
 		}
 
 	}

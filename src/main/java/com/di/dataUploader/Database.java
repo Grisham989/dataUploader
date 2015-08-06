@@ -11,6 +11,7 @@ import org.hibernate.cfg.Configuration;
 public class Database {
 	SessionFactory factory;
 	Session session = null;
+	Transaction tx = null;
 	static Logger logger = Logger.getLogger("Database");
 
 	public Database() {
@@ -58,6 +59,25 @@ public class Database {
 		}
 	}
 
+	public void addObject(Object object, String tableName) {
+		
+		try {
+			if (tableName.equalsIgnoreCase("author")) {
+				session.save((Author) object);
+			} else if (tableName.equalsIgnoreCase("book")) {
+				session.save((Book) object);
+			} else if (tableName.equalsIgnoreCase("customer")) {
+				session.save((Customer) object);
+			} else if (tableName.equalsIgnoreCase("orders")) {
+				session.save((Order) object);
+			}
+		} catch (Exception e) {
+			if (tx != null)
+				tx.rollback();
+			e.printStackTrace();
+		}
+	}
+
 	private void cleanTable(String nazwa) {
 		StringBuilder sb = new StringBuilder("truncate table ");
 		sb.append(nazwa).append(" cascade");
@@ -71,6 +91,24 @@ public class Database {
 			session.close();
 			session = null;
 		}
+	}
+
+	public void cleanTables() {
+		logger.info("Cleaning tables");
+		cleanTable("author");
+		cleanTable("customer");
+		cleanTable("orders");
+		cleanTable("book");
+	}
+	
+	public void makeTransaction()
+	{
+		tx = session.beginTransaction();
+	}
+	
+	public void commitTransaction()
+	{
+		tx.commit();
 	}
 
 }
