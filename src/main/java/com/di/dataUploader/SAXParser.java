@@ -108,7 +108,7 @@ public class SAXParser extends DefaultHandler {
 	private void statusMessage(int number, String name) {
 		if (number % 10000 == 0) {
 			StringBuilder sb = new StringBuilder(name);
-			sb.append(": ").append(authors.size());
+			sb.append(": ").append(number);
 			logger.info(sb.toString());
 		}
 	}
