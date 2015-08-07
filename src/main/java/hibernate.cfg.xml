@@ -24,6 +24,5 @@
 		<property name="hibernate.hbn2ddl.auto"> create </property>
 
 		<!-- List of XML mapping files -->
-		<mapping resource="Author.hbm.xml"/>
 	</session-factory>
 </hibernate-configuration>

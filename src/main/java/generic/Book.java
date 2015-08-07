@@ -1,11 +1,25 @@
-package com.di.dataUploader;
+package generic;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="books")
 public class Book {
+	@Id
+	@Column(name="code")
 	private String code;
+	@Column(name="title")
 	private String title;
+	@Column(name="description")
 	private String description;
+	@Column(name="isbn")
 	private String ISBN;
+	@Column(name="price")
 	private String price;
+	@Column(name="author_code")
 	private String authorCode;
 
 	public String getCode() {

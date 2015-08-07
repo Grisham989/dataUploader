@@ -14,10 +14,6 @@ import java.util.logging.Logger;
 public class App {
 	static Logger logger = Logger.getLogger("App");
 	static com.di.dataUploader.SAXParser saxHandler;
-	static ArrayList<Author> authors = new ArrayList<Author>();
-	static ArrayList<Book> books = new ArrayList<Book>();
-	static ArrayList<Customer> customers = new ArrayList<Customer>();
-	static ArrayList<Order> orders = new ArrayList<Order>();
 
 	public static void main(String[] args) {
 		Utils.setupLogFile(logger, "log_app.xml");
@@ -53,7 +49,6 @@ public class App {
 		} finally {
 			Utils.stopDbConnection(saxHandler.getDb());
 		}
-
 	}
-
+	
 }

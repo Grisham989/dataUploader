@@ -19,6 +19,7 @@ public final class Utils {
 	
 	static void stopDbConnection(Database db)
 	{
+		db.commitTransaction();
 		db.openCloseSession();
 		db.factory.close();
 	}

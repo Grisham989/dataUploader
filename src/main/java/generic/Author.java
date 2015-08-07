@@ -1,10 +1,24 @@
-package com.di.dataUploader;
+package generic;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+
+@Entity
+@Table(name="authors")
 public class Author {
-	private String firstName;
-	private String lastName;
-	private String pseudonym;
+	@Id
+	@Column(name="code")
 	private String code;
+	@Column(name="first_name")
+	private String firstName;
+	@Column(name="last_name")
+	private String lastName;
+	@Column(name="pseudonym")
+	private String pseudonym;
+	
 
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;

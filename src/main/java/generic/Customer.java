@@ -1,12 +1,27 @@
-package com.di.dataUploader;
+package generic;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="customers")
 public class Customer {
+	@Id
+	@Column(name="code")
 	private String code;
+	@Column(name="bar_code")
 	private String barcode;
+	@Column(name="first_name")
 	private String firstName;
+	@Column(name="last_name")
 	private String lastName;
+	@Column(name="pesel")
 	private String pesel;
+	@Column(name="address")
 	private String address;
+	@Column(name="phone")
 	private String phone;
 
 	public String getCode() {

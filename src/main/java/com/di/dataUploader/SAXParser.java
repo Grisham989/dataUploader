@@ -12,6 +12,11 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import generic.Author;
+import generic.Book;
+import generic.Customer;
+import generic.Order;
+
 public class SAXParser extends DefaultHandler {
 
 	Author author;

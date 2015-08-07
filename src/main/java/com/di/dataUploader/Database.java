@@ -1,5 +1,6 @@
 package com.di.dataUploader;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.hibernate.Session;
@@ -7,6 +8,11 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
+
+import generic.Author;
+import generic.Book;
+import generic.Customer;
+import generic.Order;
 
 public class Database {
 	SessionFactory factory;
@@ -16,10 +22,10 @@ public class Database {
 
 	public Database() {
 		Configuration configuration = new Configuration().configure("hibernate.cfg.xml");
-		configuration.addClass(Author.class);
-		configuration.addClass(Book.class);
-		configuration.addClass(Customer.class);
-		configuration.addClass(Order.class);
+		configuration.addAnnotatedClass(Author.class);
+		configuration.addAnnotatedClass(Book.class);
+		configuration.addAnnotatedClass(Customer.class);
+		configuration.addAnnotatedClass(Order.class);
 		StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder()
 				.applySettings(configuration.getProperties());
 		factory = configuration.buildSessionFactory(builder.build());
@@ -60,10 +66,10 @@ public class Database {
 
 	public void cleanTables() {
 		logger.info("Cleaning tables");
-		cleanTable("author");
-		cleanTable("customer");
+		cleanTable("authors");
+		cleanTable("customers");
 		cleanTable("orders");
-		cleanTable("book");
+		cleanTable("books");
 	}
 
 	public void makeTransaction() {
