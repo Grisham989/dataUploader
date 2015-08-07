@@ -12,10 +12,10 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import generic.Author;
-import generic.Book;
-import generic.Customer;
-import generic.Order;
+import com.di.generic.Author;
+import com.di.generic.Book;
+import com.di.generic.Customer;
+import com.di.generic.Order;
 
 public class SAXParser extends DefaultHandler {
 
@@ -79,12 +79,14 @@ public class SAXParser extends DefaultHandler {
 			statusMessage(counters[4], "orders");
 			BVars.bOrder = false;
 		}
-		if (counters[0] % 10000 == 0 && counters[0] > 0) {
+		if (counters[0] % 100000 == 0 && counters[0] > 0) {
 			if (counters[0] != lastCommit) {
 				lastCommit = counters[0];
 				db.commitTransaction();
+				db.session.flush();
 				db.makeTransaction();
-				logger.log(Level.INFO, "Commit nr: {0}", (int) counters[0] / 10000);
+				db.session.clear();
+				logger.log(Level.INFO, "Commit nr: {0}", (int) counters[0] / 100000);
 			}
 		}
 	}
@@ -111,7 +113,7 @@ public class SAXParser extends DefaultHandler {
 	}
 
 	private void statusMessage(int number, String name) {
-		if (number % 10000 == 0) {
+		if (number % 100000 == 0) {
 			logger.log(Level.INFO, "{0}: {1}", new Object[] { name, number });
 		}
 	}

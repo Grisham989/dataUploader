@@ -7,10 +7,10 @@ import java.sql.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
-import generic.Author;
-import generic.Book;
-import generic.Customer;
-import generic.Order;
+import com.di.generic.Author;
+import com.di.generic.Book;
+import com.di.generic.Customer;
+import com.di.generic.Order;
 
 public final class ElementMakerSingle {
 	static void authorMaker(String str, Author author) {

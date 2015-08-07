@@ -9,10 +9,10 @@ import org.hibernate.Transaction;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 
-import generic.Author;
-import generic.Book;
-import generic.Customer;
-import generic.Order;
+import com.di.generic.Author;
+import com.di.generic.Book;
+import com.di.generic.Customer;
+import com.di.generic.Order;
 
 public class Database {
 	SessionFactory factory;

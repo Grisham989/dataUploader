@@ -1,4 +1,4 @@
-package generic;
+package com.di.generic;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
