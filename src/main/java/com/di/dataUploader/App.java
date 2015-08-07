@@ -1,22 +1,16 @@
 package com.di.dataUploader;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.logging.FileHandler;
 import java.util.logging.Level;
 
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 import java.util.logging.Logger;
-import org.w3c.dom.Document;
 
-/**
- * Hello world!
- *
- */
+
 public class App {
 	static Logger logger = Logger.getLogger("App");
 	static com.di.dataUploader.SAXParser saxHandler;
@@ -31,6 +25,7 @@ public class App {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Wprowadz nazwe pliku (bez rozszerzenia): ");
 		String inputFile = sc.nextLine();
+		sc.close();
 
 		long timeStart = System.currentTimeMillis();
 		saxParse(inputFile);
@@ -52,7 +47,7 @@ public class App {
 			saxHandler.setDb(Utils.startDbConnection());
 			logger.info("starting parsing");
 			saxParser.parse(inputFile, saxHandler);
-			logger.info("parsing finish");
+			logger.info("parsing done");
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
