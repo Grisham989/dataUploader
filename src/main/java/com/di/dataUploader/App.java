@@ -31,7 +31,7 @@ public class App {
 
 	static void saxParse(String file) {
 		try {
-			StringBuilder sb = new StringBuilder("C:/xml/");
+			StringBuilder sb = new StringBuilder();
 			sb.append(file).append(".xml");
 			File inputFile = new File(sb.toString());
 

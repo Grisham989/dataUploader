@@ -83,7 +83,9 @@ public class SAXParser extends DefaultHandler {
 			if (counters[0] != lastCommit) {
 				lastCommit = counters[0];
 				db.commitTransaction();
+				db.session.flush();
 				db.makeTransaction();
+				db.session.clear();
 				logger.log(Level.INFO, "Commit nr: {0}", (int) counters[0] / 100000);
 			}
 		}
