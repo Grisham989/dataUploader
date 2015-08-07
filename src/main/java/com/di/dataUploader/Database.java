@@ -1,5 +1,6 @@
 package com.di.dataUploader;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.hibernate.Session;
@@ -25,42 +26,7 @@ public class Database {
 		factory = configuration.buildSessionFactory(builder.build());
 	}
 
-	public void addList(Object list[], String tableName) {
-		cleanTable(tableName);
-		logger.info(tableName);
-		Transaction tx = null;
-		int controllNumber = 0;
-		tx = session.beginTransaction();
-		try {
-			for (Object object : list) {
-				controllNumber++;
-				if (tableName.equalsIgnoreCase("author")) {
-					session.save((Author) object);
-				} else if (tableName.equalsIgnoreCase("book")) {
-					session.save((Book) object);
-				} else if (tableName.equalsIgnoreCase("customer")) {
-					session.save((Customer) object);
-				} else if (tableName.equalsIgnoreCase("orders")) {
-					session.save((Order) object);
-				}
-				if (controllNumber % 10000 == 0) {
-					StringBuilder sb = new StringBuilder(tableName);
-					sb.append(" krok: ").append(controllNumber).append(" z ").append(list.length);
-					logger.info(sb.toString());
-					tx.commit();
-					tx = session.beginTransaction();
-				}
-			}
-			tx.commit();
-		} catch (Exception e) {
-			if (tx != null)
-				tx.rollback();
-			e.printStackTrace();
-		}
-	}
-
 	public void addObject(Object object, String tableName) {
-		
 		try {
 			if (tableName.equalsIgnoreCase("author")) {
 				session.save((Author) object);
@@ -100,15 +66,12 @@ public class Database {
 		cleanTable("orders");
 		cleanTable("book");
 	}
-	
-	public void makeTransaction()
-	{
+
+	public void makeTransaction() {
 		tx = session.beginTransaction();
 	}
-	
-	public void commitTransaction()
-	{
+
+	public void commitTransaction() {
 		tx.commit();
 	}
-
 }
